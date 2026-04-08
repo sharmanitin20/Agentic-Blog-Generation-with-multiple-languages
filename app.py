@@ -1,7 +1,8 @@
-import uvicorn
+"""import uvicorn
 from fastapi import FastAPI, Request
 from src.graphs.graph_builder import GraphBuilder
 from src.llms.groqllm import GroqLLM
+
 
 
 import os
@@ -35,5 +36,15 @@ async def create_blogs(request: Request):
 
     return {"data": state}    
 if __name__ == "__main__":
-    uvicorn.run("app:app",host="0.0.0.0",port=8000,reload=True)
-       
+    uvicorn.run("app:app",host="0.0.0.0",port=8000,reload=True)"""
+import torch
+import warnings
+try:
+    torch.classes.__path__ = []
+except Exception:
+    pass
+
+warnings.filterwarnings("ignore", category=UserWarning, module="torch")    
+from src.main import load_langgraph_agenticai_app
+if __name__ == "__main__":
+   load_langgraph_agenticai_app()        

@@ -72,10 +72,11 @@ class BlogNode:
     def route_decision(self, state: BlogState):
         """
         Route the content to the respective translation function.
-        """
         if state["current_language"] == "hindi":
             return "hindi"
         elif state["current_language"] == "french": 
             return "french"
         else:
-            return state['current_language']
+        """
+        
+        return state['current_language']

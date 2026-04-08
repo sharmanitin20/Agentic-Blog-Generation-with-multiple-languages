@@ -2,15 +2,17 @@ from langchain_groq import ChatGroq
 import os
 from dotenv import load_dotenv
 
-
 class GroqLLM:
-    def __init__(self):
+    # Accept **kwargs to catch any "ghost" arguments from LangChain
+    def __init__(self, **kwargs): 
         load_dotenv()
+        self.api_key = os.getenv("GROQ_API_KEY")
 
     def get_llm(self):
-        try:
-            os.environ["GROQ_API_KEY"]=self.groq_api_key=os.getenv("GROQ_API_KEY")
-            llm =ChatGroq(api_key=self.groq_api_key, model="llama-3.3-70b-versatile")
-            return llm
-        except KeyError as e:
-            raise ValueError("Error occured with exception : {e}")
+        if not self.api_key:
+            raise ValueError("GROQ_API_KEY not found in .env")
+            
+        return ChatGroq(
+            groq_api_key=self.api_key, 
+            model_name="llama-3.3-70b-versatile"
+        )
