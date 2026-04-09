@@ -1,0 +1,13 @@
+venv/
+.env
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.DS_Store
+.langgraph_api/
+uv.lock
+pyproject.toml
+request.json
+*.pckl
+README.md

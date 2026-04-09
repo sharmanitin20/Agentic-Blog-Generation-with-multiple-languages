@@ -1,52 +1,46 @@
 from langgraph.graph import StateGraph, START, END
-from src.llms.groqllm import GroqLLM
 from src.states.blogstate import BlogState
 from src.nodes.blog_node import BlogNode
+
 
 class GraphBuilder:
     def __init__(self, llm):
         self.llm = llm
-        self.graph = StateGraph(BlogState)
+
+    def _base_nodes(self, graph, blog_node):
+        """Add shared nodes and edges for topic graph."""
+        graph.add_node("title_creation", blog_node.title_creation)
+        graph.add_node("content_generation", blog_node.content_generation)
+        graph.add_edge(START, "title_creation")
+        graph.add_edge("title_creation", "content_generation")
+        return graph
 
     def build_topic_graph(self):
-        self.blog_node_obj = BlogNode(self.llm)
-        self.graph.add_node("title_creation", self.blog_node_obj.title_creation)
-        self.graph.add_node("content_generation", self.blog_node_obj.content_generation)
-        self.graph.add_edge(START, "title_creation")
-        self.graph.add_edge("title_creation", "content_generation")
-        self.graph.add_edge("content_generation", END)
-        return self.graph
+        graph = StateGraph(BlogState)
+        blog_node = BlogNode(self.llm)
+        graph = self._base_nodes(graph, blog_node)
+        graph.add_edge("content_generation", END)
+        return graph
 
     def build_language_graph(self, target_lang):
-        self.blog_node_obj = BlogNode(self.llm)
-        self.graph.add_node("title_creation", self.blog_node_obj.title_creation)
-        self.graph.add_node("content_generation", self.blog_node_obj.content_generation)
-        
-        # FIXED: Pass the target_lang directly into the lambda
-        self.graph.add_node("language_translation", 
-            lambda state: self.blog_node_obj.translation({**state, "current_language": target_lang}))
+        graph = StateGraph(BlogState)
+        blog_node = BlogNode(self.llm)
+        graph = self._base_nodes(graph, blog_node)
+        graph.add_node(
+            "language_translation",
+            lambda state: blog_node.translation({**state, "current_language": target_lang})
+        )
+        graph.add_edge("content_generation", "language_translation")
+        graph.add_edge("language_translation", END)
+        return graph
 
-        self.graph.add_edge(START, "title_creation")
-        self.graph.add_edge("title_creation", "content_generation")
-        self.graph.add_edge("content_generation", "language_translation")
-        self.graph.add_edge("language_translation", END)
-        return self.graph
-
-    def setup_graph(self, usecase):
-        # We build the graph based on the dropdown selection
-        if usecase.lower() == "english":
-            self.build_topic_graph()
+    def setup_graph(self, usecase: str):
+        usecase = usecase.strip().lower()
+        if usecase == "english":
+            graph = self.build_topic_graph()
         else:
-            self.build_language_graph(usecase)
-            
-        return self.graph.compile()
-    
-
-    
-
-            
-
-    
+            graph = self.build_language_graph(usecase)
+        return graph.compile()
 
 ## Below code is for the langsmith langgraph studio
 """llm=GroqLLM().get_llm()
