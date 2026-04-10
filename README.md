@@ -189,32 +189,6 @@ The Docker container starts the Streamlit app through `app.py`, which is the cor
 - Handling input validation and user cooldowns
 - Keeping the UI simple while still supporting iterative generation
 
-## Potential Improvements
-
-- Add blog tone or writing-style presets
-- Save blog generation history
-- Add authentication and per-user sessions
-- Add automated tests for graph flow and validation logic
-- Add richer formatting options for exported content
-- Add screenshots or a short GIF demo to improve the portfolio presentation further
-
-## What I Learned
-
-This project helped me practice:
-
-- designing an AI workflow instead of a single prompt call
-- integrating LLMs into a usable web interface
-- debugging Docker deployment issues
-- preparing an AI project for public hosting
-
-## Demo Assets To Add Next
-
-To make the portfolio presentation even stronger, the next simple upgrade is to add:
-
-- a short GIF showing topic input, generation, and feedback regeneration
-- a GitHub repository link near the top of this README
-- the four screenshots listed above under an `assets/screenshots/` folder
-
 ## License
 
 MIT
