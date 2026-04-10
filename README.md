@@ -52,5 +52,8 @@ git clone <repo>
 cd BlogAgentic
 pip install -r requirements.txt
 # Add GROQ_API_KEY to .env
-streamlit run main.py
+streamlit run app.py
 ```
+
+For Docker and Hugging Face Spaces, Streamlit must listen on `0.0.0.0:7860`.
+That is the container bind address, not the browser URL you open manually.

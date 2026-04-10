@@ -26,7 +26,7 @@ USER appuser
 EXPOSE 7860
 
 # Run Streamlit on port 7860 (required by HuggingFace)
-CMD ["streamlit", "run", "main.py", \
+CMD ["streamlit", "run", "app.py", \
      "--server.port=7860", \
      "--server.address=0.0.0.0", \
      "--server.headless=true", \

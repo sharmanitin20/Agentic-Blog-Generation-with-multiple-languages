@@ -1,8 +1,14 @@
+.venv/
 venv/
 .env
 __pycache__/
 *.pyc
 *.pyo
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
 .git/
 .DS_Store
 .langgraph_api/

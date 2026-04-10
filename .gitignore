@@ -1,11 +1,24 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
+*.pyc
+*.pyo
 build/
 dist/
 wheels/
 *.egg-info
+*.pckl
 
 # Virtual environments
 .venv
+venv/
 .env
+
+# Project / OS files
+.git/
+.DS_Store
+.langgraph_api/
+uv.lock
+pyproject.toml
+request.json
+README.md

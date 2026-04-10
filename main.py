@@ -1,6 +1,5 @@
-def main():
-    print("Hello from blogagentic!")
+from src.main import load_langgraph_agenticai_app
 
 
 if __name__ == "__main__":
-    main()
+    load_langgraph_agenticai_app()
